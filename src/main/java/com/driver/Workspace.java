@@ -8,28 +8,22 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Workspace extends Gmail{
-
     private ArrayList<Meeting> calendar; // Stores all the meetings
-
     public ArrayList<Meeting> getCalendar() {
         return calendar;
     }
-
     public void setCalendar(ArrayList<Meeting> calendar) {
         this.calendar = calendar;
     }
-
     public Workspace(String emailId) {
         // The inboxCapacity is equal to the maximum value an integer can store.
         super(emailId,Integer.MAX_VALUE);
         setCalendar(new ArrayList<Meeting>());
     }
-
     public void addMeeting(Meeting meeting){
         //add the meeting to calendar
         getCalendar().add(meeting);
     }
-
     public int findMaxMeetings(){
         // find the maximum number of meetings you can attend
         // 1. At a particular time, you can be present in at most one meeting
@@ -52,9 +46,6 @@ public class Workspace extends Gmail{
                 maxMeet++;
                 meetEnd = schedule.get(i).getEndTime();
             }
-        }
-        for (Meeting meeting : schedule) {
-            System.out.println(meeting.getStartTime() + " " + meeting.getEndTime());
         }
         return  maxMeet;
     }
