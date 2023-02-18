@@ -20,9 +20,9 @@ public class Gmail extends Email {
     public void receiveMail(Date date, String sender, String message){
         // If the inbox is full, move the oldest mail in the inbox to trash and add the new mail to inbox.
         if(this.inbox.size() == this.inboxCapacity){
-            this.trashMail.add(this.inbox.poll());
-            this.inbox.add(new Mail(date,sender,message));
+            this.trashMail.offer(this.inbox.poll());
         }
+        this.inbox.offer(new Mail(date,sender,message));
         // It is guaranteed that:
         // 1. Each mail in the inbox is distinct.
         // 2. The mails are received in non-decreasing order. This means that the date of a new mail is greater than equal to the dates of mails received already.
@@ -37,13 +37,14 @@ public class Gmail extends Email {
         }
         Queue <Mail> temporarySpace = new LinkedList<>();
         while(!this.inbox.isEmpty() && !this.inbox.peek().message.equals(message)){
-            temporarySpace.add(this.inbox.poll());
+            temporarySpace.offer(this.inbox.poll());
         }
-        this.trashMail.add(this.inbox.poll());
+        this.trashMail.offer(this.inbox.poll());
         while(!this.inbox.isEmpty()){
-            temporarySpace.add(this.inbox.poll());
+            temporarySpace.offer(this.inbox.poll());
         }
-        this.inbox = temporarySpace;
+        this.inbox = new LinkedList<>(temporarySpace);
+
     }
 
     public String findLatestMessage(){
@@ -52,10 +53,10 @@ public class Gmail extends Email {
         // Else, return the message of the latest mail present in the inbox
         int size = this.inbox.size();
         for(int i =0; i < size-1; i++){
-            this.inbox.add(this.inbox.poll());
+            this.inbox.offer(this.inbox.poll());
         }
         String message = this.inbox.peek().message;
-        this.inbox.add(this.inbox.poll());
+        this.inbox.offer(this.inbox.poll());
         return message;
     }
 
@@ -78,7 +79,7 @@ public class Gmail extends Email {
                     || (this.inbox.peek().date.after(start) && this.inbox.peek().date.before(end))
                     || this.inbox.peek().date.equals(end))
                 countMail++;
-            this.inbox.add(this.inbox.poll());
+            this.inbox.offer(this.inbox.poll());
         }
         return countMail;
     }
