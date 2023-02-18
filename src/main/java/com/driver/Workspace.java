@@ -39,11 +39,9 @@ public class Workspace extends Gmail{
         Collections.sort(schedule, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting o1, Meeting o2) {
-                if(o1.getStartTime().isBefore(o2.getEndTime())) return -1;
-                else if( o1.getStartTime().isAfter(o2.getStartTime())) return 1;
-                else if (o1.getEndTime().isBefore(o2.getEndTime())) return -1;
-                else if (o1.getEndTime().isAfter(o2.getEndTime())) return  1;
-                else return 0;
+                if(o1.getStartTime().isBefore(o2.getStartTime())) return -1;
+                else if( o1.getStartTime().equals(o2.getStartTime()) && o1.getEndTime().isBefore(o2.getEndTime())) return -1;
+                else return 1;
             }
         });
         int maxMeet = 0;
@@ -53,6 +51,9 @@ public class Workspace extends Gmail{
                 maxMeet++;
                 meetEnd = schedule.get(i).getEndTime();
             }
+        }
+        for(int i =0; i < schedule.size(); i++){
+            System.out.println(schedule.get(i).getStartTime() + " " + schedule.get(i).getEndTime());
         }
         return  maxMeet;
     }
