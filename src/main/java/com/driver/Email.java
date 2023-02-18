@@ -24,16 +24,12 @@ public class Email {
 
     public void changePassword(String oldPassword, String newPassword){
         //Change password only if the oldPassword is equal to current password and the new password meets all of the following:
-        if(!oldPassword.equals(getPassword())){
-//            System.out.println("old password not match with current password! please try again");
+        if(!oldPassword.equals(getPassword()))
             return;
-        }
 
         // 1. It contains at least 8 characters
-        else if (newPassword.length() < 8 ){
-//            System.out.println(" Password length must be at least 8! please try again");
-            return;
-        }
+        else if (newPassword.length() < 8 ) return;
+
         // 2. It contains at least one uppercase letter
         boolean isUpperCase = false;
         // 3. It contains at least one lowercase letter
@@ -51,9 +47,6 @@ public class Email {
         }
         if(isUpperCase && isLowerCase && isDigit && isSpecialCharacter){
             setPassword(newPassword);
-//            System.out.println("new Password has bee updated");
-        }else{
-//            System.out.println("new Password must contains at least one uppercase letter and at least one lowercase letter and at least one digit letter and at least one special character letter");
         }
     }
 }
