@@ -41,9 +41,9 @@ public class Email {
         for(int i =0; i < newPassword.length(); i++){
             char ch = newPassword.charAt(i);
             if(ch >= 'A' && ch <= 'Z')isUpperCase = true;
-            if(ch >= 'a' && ch <= 'z')isLowerCase = true;
-            if(ch >= '0' && ch <= '9')isDigit = true;
-            if((ch < 'A' || ch > 'Z') &&(ch < '0' || ch > '9') && (ch < 'a' || ch > 'z') )isSpecialCharacter = true;
+            else if(ch >= 'a' && ch <= 'z')isLowerCase = true;
+            else if(ch >= '0' && ch <= '9')isDigit = true;
+            else isSpecialCharacter = true;
         }
         if(isUpperCase && isLowerCase && isDigit && isSpecialCharacter){
             setPassword(newPassword);

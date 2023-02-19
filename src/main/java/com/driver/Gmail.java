@@ -8,7 +8,8 @@ public class Gmail extends Email {
 
     //Inbox: Stores mails. Each mail has date (Date), sender (String), message (String). It is guaranteed that message is distinct for all mails.
     private Queue<Mail> inbox;
-    //Trash: Stores mails. Each mail has date (Date), sender (String), message (String)
+    //Trash: Stores mails. Each mail has date (Date), sender (String),
+    // message (String)
     private Queue<Mail> trashMail;
     public Gmail(String emailId, int inboxCapacity) {
     super(emailId);
@@ -19,14 +20,13 @@ public class Gmail extends Email {
 
     public void receiveMail(Date date, String sender, String message){
         // If the inbox is full, move the oldest mail in the inbox to trash and add the new mail to inbox.
-        if(this.inbox.size() == this.inboxCapacity){
+        if(this.inbox.size() >= this.inboxCapacity){
             this.trashMail.offer(this.inbox.poll());
         }
         this.inbox.offer(new Mail(date,sender,message));
         // It is guaranteed that:
         // 1. Each mail in the inbox is distinct.
         // 2. The mails are received in non-decreasing order. This means that the date of a new mail is greater than equal to the dates of mails received already.
-
     }
 
     public void deleteMail(String message){
@@ -44,7 +44,6 @@ public class Gmail extends Email {
             temporarySpace.offer(this.inbox.poll());
         }
         this.inbox = new LinkedList<>(temporarySpace);
-
     }
 
     public String findLatestMessage(){
@@ -55,6 +54,7 @@ public class Gmail extends Email {
         for(int i =0; i < size-1; i++){
             this.inbox.offer(this.inbox.poll());
         }
+        assert this.inbox.peek() != null;
         String message = this.inbox.peek().message;
         this.inbox.offer(this.inbox.poll());
         return message;
