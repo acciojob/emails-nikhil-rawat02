@@ -39,11 +39,17 @@ public class Gmail extends Email {
         while(!this.inbox.isEmpty() && !this.inbox.peek().message.equals(message)){
             temporarySpace.offer(this.inbox.poll());
         }
-        this.trashMail.offer(this.inbox.poll());
+
+        if(this.inbox.size() > 0){
+            this.trashMail.offer(this.inbox.poll());
+        }
+
         while(!this.inbox.isEmpty()){
             temporarySpace.offer(this.inbox.poll());
         }
+
         this.inbox = new LinkedList<>(temporarySpace);
+
     }
 
     public String findLatestMessage(){
@@ -91,6 +97,7 @@ public class Gmail extends Email {
 
     public int getTrashSize(){
         // Return number of mails in Trash
+//        if(this.trashMail.size() > 0)System.out.println(this.trashMail.peek().message);
        return this.trashMail.size();
     }
 

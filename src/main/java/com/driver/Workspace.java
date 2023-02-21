@@ -33,9 +33,7 @@ public class Workspace extends Gmail{
         schedule.sort(new Comparator<Meeting>() {
             @Override
             public int compare(Meeting o1, Meeting o2) {
-                if (o1.getStartTime().isBefore(o2.getStartTime())) return -1;
-                else if (o1.getStartTime().equals(o2.getStartTime()) && o1.getEndTime().isBefore(o2.getEndTime()))
-                    return -1;
+                if (o1.getEndTime().isBefore(o2.getEndTime())) return -1;
                 else return 1;
             }
         });
